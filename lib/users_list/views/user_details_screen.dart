@@ -16,22 +16,20 @@ class UserDetailsScreen extends StatelessWidget {
           title: userViewModel.selectedModel!.name!,
         ),
       ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppTitle(
-              title: userViewModel.selectedModel!.name!,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppTitle(
+            title: userViewModel.selectedModel!.name!,
+          ),
+          Text(
+            userViewModel.selectedModel!.email!,
+            style: const TextStyle(
+              color: Colors.black,
             ),
-            Text(
-              userViewModel.selectedModel!.email!,
-              style: const TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
