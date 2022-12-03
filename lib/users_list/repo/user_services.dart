@@ -9,7 +9,7 @@ class UserServices {
     try {
       var url = Uri.parse(USERS_LIST);
       var response = await http.get(url);
-      if (200 == response.statusCode) {
+      if (SUCCESS == response.statusCode) {
         return Success(
           response: userListModelFromJson(response.body),
         );
@@ -20,6 +20,9 @@ class UserServices {
       return Failure(code: NO_INTERNET, errorResponse: 'No Internet');
     } on FormatException {
       return Failure(code: INVALID_FORMAT, errorResponse: 'Invalid Format');
+    } on SocketException {
+      return Failure(
+          code: NO_INTERNET, errorResponse: 'No Internet Connection');
     } catch (e) {
       return Failure(code: UNKNOWN_ERROR, errorResponse: 'Unknown Error');
     }

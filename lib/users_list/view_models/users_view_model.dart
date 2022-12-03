@@ -11,10 +11,13 @@ class UserViewModel extends ChangeNotifier {
   UserError? _userError;
   UserModel? _selectedModel;
 
+  UserModel _addingUser = UserModel();
+
   bool get loading => _loading;
   List<UserModel> get userListModel => _userListModel;
   UserError? get userError => _userError;
   UserModel? get selectedModel => _selectedModel;
+  UserModel get addingUser => _addingUser;
 
   UserViewModel() {
     getUsers();
@@ -45,10 +48,30 @@ class UserViewModel extends ChangeNotifier {
     if (response is Failure) {
       UserError userError = UserError(
         code: response.code,
-        message: response.errorResponse,
+        message: response.errorResponse!,
       );
       setUserError(userError);
     }
     setLoading(false);
+  }
+
+  addUser() async {
+    if (!isValid()) {
+      return;
+    }
+    _userListModel.add(addingUser);
+    _addingUser = UserModel();
+    notifyListeners();
+    return true;
+  }
+
+  isValid() {
+    if (addingUser.name == null || addingUser.name!.isEmpty) {
+      return false;
+    }
+    if (addingUser.email == null || addingUser.name!.isEmpty) {
+      return false;
+    }
+    return true;
   }
 }

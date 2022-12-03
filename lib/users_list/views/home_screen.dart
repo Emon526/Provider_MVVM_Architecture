@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../components/app_error.dart';
 import '../../components/app_loading.dart';
 import '../../components/app_title.dart';
 import '../../components/user_list_row.dart';
@@ -21,6 +22,16 @@ class HomeScreen extends StatelessWidget {
         title: const AppTitle(
           title: 'Users',
         ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              openAddUser(context);
+            },
+            icon: Icon(
+              Icons.add,
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -35,11 +46,8 @@ class HomeScreen extends StatelessWidget {
       return const AppLoading();
     }
     if (userViewModel.userError != null) {
-      return const Text(
-        'error',
-        style: TextStyle(
-          color: Colors.black,
-        ),
+      return AppError(
+        errorText: userViewModel.userError!.message!.toString(),
       );
     }
     return Expanded(
